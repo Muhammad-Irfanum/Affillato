@@ -49,6 +49,7 @@ export const POST = async (req: Request) => {
     const customer = await stripe.customers.create({
       metadata: {
         userId: session.user.id,
+        type: 'instant-checkout',
         product: JSON.stringify({
           id: product._id,
           title: product.title,
@@ -57,7 +58,6 @@ export const POST = async (req: Request) => {
           price: product.price.discounted,
           quantity: 1,
         }),
-        type: 'instant-checkout',
       },
     });
 
