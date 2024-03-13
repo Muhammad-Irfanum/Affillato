@@ -74,21 +74,14 @@ export default function BuyingOptions({ wishlist }: Props) {
 
     return (
         <div className="flex items-center space-x-2">
-            <CartCountUpdater
-                onDecrement={handleDecrement}
-                onIncrement={handleIncrement}
-                value={quantity}
-            />
 
-            <Button variant="text"
-                disabled={isPending}
+
+            <Button className="rounded-full px-12 text-lg bg-[#d0b48d]"
                 onClick={() => {
-                    startTransition(async () => {
-                        await addToCart()
-                    });
+                    // Redirect to google.com
+                    window.location.href = "https://www.google.com";
                 }}
-            >Add to Cart</Button>
-            <Button color="amber" className="rounded-full">
+            >
                 Buy Now
             </Button>
             <Button variant="text"

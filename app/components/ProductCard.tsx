@@ -8,6 +8,7 @@ import {
     CardFooter,
     Chip,
 } from "@material-tailwind/react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import truncate from "truncate";
@@ -17,6 +18,10 @@ import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import Rating from "./Rating";
+import router from 'next/navigation'
+import { useState } from "react";
+import ProductComparisonModal from "./ProductComparisonModal";
+import ComparisonContext from "./context/ComparisonContext";
 
 export interface Product {
     id: string;
@@ -37,6 +42,13 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { addProduct } = useContext(ComparisonContext) as any;
+
+    const handleCompareClick = () => {
+        addProduct(product);
+        setIsModalOpen(true);
+    };
     const { loggedIn } = useAuth()
     const [isPending, startTransition] = useTransition();
     const router = useRouter()
@@ -122,29 +134,34 @@ export default function ProductCard({ product }: Props) {
                     disabled={isPending}
 
                     onClick={() => {
-                        startTransition(async () => {
-                            await addToCart()
-                        });
+                        // 
+                        handleCompareClick()
                     }}
                     ripple={false}
                     fullWidth={true}
                     className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:shadow-none hover:scale-105 focus:shadow-none focus:scale-105 active:scale-100"
                 >
-                    Add to Cart
+                    Compare
                 </Button>
                 <Button
                     onClick={() => {
                         startTransition(async () => {
-                            await handleCheckout()
+                            // Redirect to google.com
+                            window.location.href = 'https://google.com';
                         });
                     }}
                     ripple={false}
                     fullWidth={true}
-                    className="bg-blue-400 text-white shadow-none hover:shadow-none hover:scale-105 focus:shadow-none focus:scale-105 active:scale-100"
+                    className=" bg-[#d0b48d] text-white shadow-none hover:shadow-none hover:scale-105 focus:shadow-none focus:scale-105 active:scale-100"
                 >
                     Buy Now
                 </Button>
             </CardFooter>
+            <ProductComparisonModal
+                product={product}
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </Card>
     );
 }

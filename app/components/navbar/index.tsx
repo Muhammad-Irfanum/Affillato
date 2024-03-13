@@ -54,7 +54,7 @@ const Navbar = async () => {
 
     const profile = await fetchUserProfile();
     return (
-        <div>
+        <div className=''>
             <NavUI cartItemsCount={count}
                 avatar={profile?.avatar}
             />

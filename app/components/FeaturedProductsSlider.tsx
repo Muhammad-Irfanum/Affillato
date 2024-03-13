@@ -57,13 +57,9 @@ export default function FeaturedProductsSlider({ products }: Props) {
                                             <h1 className="lg:text-6xl 
                                             md:text-5xl text-4xl
                                             text-white font-bold text-left mb-2">
-                                                {title}
+                                                Affilato - A place to find the best products, for you.
                                             </h1>
-                                            <Button
-                                                color={index % 2 === 0 ? 'orange' : 'cyan'}
-                                                onClick={() => router.push(link)}>
-                                                {linkTitle}
-                                            </Button>
+
                                         </div>
                                     </div>
                                 </div>

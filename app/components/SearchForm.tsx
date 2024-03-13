@@ -26,9 +26,10 @@ export default function SearchForm({ submitTo }: Props) {
         >
             <Input
                 label="Search"
+                color="white"
                 icon={
                     <button>
-                        <MagnifyingGlassIcon className="h-5 w-5" />
+                        <MagnifyingGlassIcon className="h-5 w-5" color="white" />
                     </button>
                 }
                 value={query || searchQuery}

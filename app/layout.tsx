@@ -4,12 +4,13 @@ import "./globals.css";
 import Navbar from "@components/navbar";
 import Notification from "./components/Notification";
 import AuthSession from "./components/AuthSession";
+import { ComparisonProvider } from "./components/context/ComparisonContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Pro Store | Ecommerce Store",
-  description: "Your one stop shop for all your ecommerce needs",
+  title: "Affilato | Affiliate Website",
+  description: "You can find the best products here.",
   icons: [
     {
       rel: "icon",
@@ -29,14 +30,16 @@ export default function RootLayout({
 }>) {
   return (
     <AuthSession>
-      <html lang="en">
-        <body className={inter.className}>
+      <ComparisonProvider>
+        <html lang="en">
+          <body className={inter.className}>
 
-          {children}
-          <Notification />
-        </body>
+            {children}
+            <Notification />
+          </body>
 
-      </html>
+        </html>
+      </ComparisonProvider>
     </AuthSession>
   );
 }

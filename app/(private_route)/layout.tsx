@@ -24,7 +24,7 @@ const PrivateLayout = async ({ children }: Props) => {
             className='max-w-screen-xl mx-auto p-4 xl:p-0'
         >
             <Navbar />
-            
+
             {children}
         </div >
     )

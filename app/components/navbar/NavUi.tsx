@@ -21,16 +21,7 @@ interface Props {
 }
 
 export const menuItems = [
-    {
-        href: "/profile",
-        icon: <UserCircleIcon className="h-4 w-4" />,
-        label: "My Profile",
-    },
-    {
-        href: "/profile/orders",
-        icon: <ShoppingBagIcon className="h-4 w-4" />,
-        label: "Orders",
-    },
+
     {
         href: "/profile/wishlist",
         icon: <HeartIcon className="h-4 w-4" />,
@@ -49,16 +40,16 @@ export default function NavUI({ cartItemsCount, avatar }: Props) {
     }, []);
 
     return (
-        <>
-            <MaterialNav
+        <div className="bg-gray-800 sticky w-full">
+            <nav
                 placeholder={loggedIn ? "Search" : ""}
-                className="mx-auto max-w-screen-xl px-4 py-2">
+                className=" px-4 py-2 w-full">
                 <div className="flex items-center justify-between text-blue-gray-900">
                     <Link
                         href="/"
-                        className="mr-4 cursor-pointer py-1.5 lg:ml-2 font-semibold"
+                        className="mr-4 cursor-pointer py-1.5 lg:ml-2 text-2xl font-semibold text-white"
                     >
-                        Pro Store
+                        Affilato
                     </Link>
 
 
@@ -76,7 +67,7 @@ export default function NavUI({ cartItemsCount, avatar }: Props) {
                     </div>
 
                     <div className="hidden lg:flex gap-2 items-center">
-                        <CartIcon cartItems={cartItemsCount} />
+
                         {loggedIn ? (
                             <ProfileMenu menuItems={menuItems}
                                 avatar={avatar}
@@ -116,7 +107,7 @@ export default function NavUI({ cartItemsCount, avatar }: Props) {
                         </IconButton>
                     </div>
                 </div>
-            </MaterialNav>
+            </nav>
             <div className="lg:hidden">
                 <MobileNav
                     menuItems={menuItems}
@@ -124,6 +115,6 @@ export default function NavUI({ cartItemsCount, avatar }: Props) {
                     open={open}
                 />
             </div>
-        </>
+        </div>
     );
 }
