@@ -1,5 +1,6 @@
 import { Model, model, models, Schema, Types } from 'mongoose';
 import categories from '../utils/categories';
+import { AffiliateEntry } from '../types';
 
 export interface NewProduct {
   title: string;
@@ -7,6 +8,7 @@ export interface NewProduct {
   bulletPoints?: string[];
   thumbnail: { url: string; id: string };
   images?: { url: string; id: string }[];
+  affiliates: AffiliateEntry[];
   price: {
     base: number;
     discounted: number;
@@ -28,6 +30,16 @@ const productSchema = new Schema<ProductDocument>(
     title: { type: String, required: true },
     description: { type: String, required: true },
     bulletPoints: { type: [String] },
+    affiliates: {
+      type: [
+        {
+          site: { type: String, required: true },
+          link: { type: String, required: true },
+          price: { type: Number, required: true },
+        },
+      ],
+      required: true,
+    },
     thumbnail: {
       type: Object,
       required: true,

@@ -54,7 +54,8 @@ const fetchProduct = async (productId: string) => {
         price: product.price,
         sale: product.sale,
         outOfStock: product.quantity < 1,
-        isWishlist
+        isWishlist,
+        affiliates: product.affiliates
     });
 };
 
@@ -128,6 +129,7 @@ const Product = async ({ params }: Props) => {
                 rating={productInfo.rating}
                 outOfStock={productInfo.outOfStock}
                 isWishlist={productInfo.isWishlist}
+                affiliates={productInfo.affiliates}
             />
 
             <SimilarProductsList products={similarProducts} />

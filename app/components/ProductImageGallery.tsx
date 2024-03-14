@@ -57,11 +57,12 @@ export default function ProductImageGallery(props: Props) {
                             alt="testing"
                             width={550}
                             height={550}
-                            className="object-contain
+                            className="object-contain 
                             "
                             placeholder="blur"
                             blurDataURL={rgbDataURL(220, 220, 220)}
                             loading="lazy"
+
                         />
                     );
                 })}

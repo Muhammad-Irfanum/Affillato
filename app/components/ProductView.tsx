@@ -3,6 +3,7 @@ import BuyingOptions from "@components/BuyingOptions";
 import { formatPrice } from "../utils/helper";
 import ProductImageGallery from "@components/ProductImageGallery";
 import Rating from "./Rating";
+import { AffiliateEntry } from "../types";
 
 interface Props {
     title: string;
@@ -14,6 +15,8 @@ interface Props {
     rating?: number;
     outOfStock: boolean;
     isWishlist?: boolean;
+    affiliates: AffiliateEntry[];
+    youtubeLink?: string;
 }
 
 
@@ -27,7 +30,8 @@ export default function ProductView({
     sale,
     rating,
     outOfStock,
-    isWishlist
+    isWishlist,
+    affiliates
 }: Props) {
 
     console.log(isWishlist)
@@ -66,10 +70,41 @@ export default function ProductView({
                 <div className="flex py-4">
                     {
                         outOfStock ? <p className="text-red-500 uppercase">Out of Stock</p> : <BuyingOptions
-                            wishlist={isWishlist}
+                            wishlist={isWishlist} youtubeLink='https://www.youtube.com/watch?v=AgyJv2Qelwk'
                         />
                     }
                 </div>
+                <div className="mt-4">
+                    <h3 className="text-lg font-semibold mb-2">Where to Buy</h3>
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th className="border-b-2 p-2">Site</th>
+                                <th className="border-b-2 p-2">Price</th>
+                                <th className="border-b-2 p-2">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {affiliates.map((affiliate, index) => (
+                                <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                                    <td className="p-2 border-b">{affiliate.site}</td>
+                                    <td className="p-2 border-b">{formatPrice(affiliate.price)}</td>
+                                    <td className="p-2 border-b">
+                                        <a
+                                            href={affiliate.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-500 hover:text-blue-600"
+                                        >
+                                            Buy Now
+                                        </a>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     );

@@ -16,7 +16,7 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import categories from "@/app/utils/categories";
 import ImageSelector from "@components/ImageSelector";
 import { NewProductInfo } from "../types";
-
+import { AffiliateEntry } from "../types";
 interface Props {
     initialValue?: InitialValue;
     onSubmit(values: NewProductInfo): void;
@@ -34,6 +34,7 @@ export interface InitialValue {
     salePrice: number;
     category: string;
     quantity: number;
+    affiliates: AffiliateEntry[];
 }
 
 const defaultValue = {
@@ -44,6 +45,7 @@ const defaultValue = {
     salePrice: 0,
     category: "",
     quantity: 0,
+
 };
 
 export default function ProductForm(props: Props) {
@@ -55,6 +57,23 @@ export default function ProductForm(props: Props) {
     const [productInfo, setProductInfo] = useState({ ...defaultValue });
     const [thumbnailSource, setThumbnailSource] = useState<string[]>();
     const [productImagesSource, setProductImagesSource] = useState<string[]>();
+    const [affiliates, setAffiliates] = useState<AffiliateEntry[]>([]);
+
+    const addAffiliateEntry = () => {
+        setAffiliates([...affiliates, { site: '', link: '', price: 0 }]);
+    };
+
+    const updateAffiliateEntry = (index: number, field: keyof AffiliateEntry, value: string | number) => {
+        const updatedAffiliates = [...affiliates];
+        updatedAffiliates[index] = { ...updatedAffiliates[index], [field]: value };
+        setAffiliates(updatedAffiliates);
+    };
+
+    const removeAffiliateEntry = (index: number) => {
+        const updatedAffiliates = affiliates.filter((_, i) => i !== index);
+        setAffiliates(updatedAffiliates);
+    };
+
 
     const fields = productInfo.bulletPoints;
 
@@ -156,7 +175,10 @@ export default function ProductForm(props: Props) {
             <form
                 action={() =>
                     startTransition(async () => {
-                        await onSubmit({ ...productInfo, images: imageFiles, thumbnail: thumbnail! });
+                        await onSubmit({
+                            ...productInfo, images: imageFiles, thumbnail: thumbnail!,
+                            affiliates: affiliates!
+                        });
                     })
                 }
                 className="space-y-6"
@@ -249,6 +271,47 @@ export default function ProductForm(props: Props) {
                         />
                     </div>
                 </div>
+                <div className="space-y-4">
+                    <h3>Affiliate Links</h3>
+                    {affiliates.map((affiliate, index) => (
+                        <div key={index} className="flex space-x-2 items-center">
+                            <Input
+                                value={affiliate.site}
+                                label={`Site ${index + 1}`}
+                                onChange={({ target }) => updateAffiliateEntry(index, 'site', target.value)}
+                            />
+                            <Input
+                                value={affiliate.link}
+                                label={`Link ${index + 1}`}
+                                onChange={({ target }) => updateAffiliateEntry(index, 'link', target.value)}
+                            />
+                            <Input
+                                value={affiliate.price}
+                                label={`Price ${index + 1}`}
+                                onChange={({ target }) => updateAffiliateEntry(index, 'price', Number(target.value))}
+                            />
+                            {affiliates.length > 1 && (
+                                <button
+                                    onClick={() => removeAffiliateEntry(index)}
+                                    type="button"
+                                    className="ml-2"
+                                >
+                                    <TrashIcon className="w-5 h-5" />
+                                </button>
+                            )}
+                        </div>
+                    ))}
+
+                    <button
+                        type="button"
+                        onClick={addAffiliateEntry}
+                        className="flex items-center space-x-1 text-gray-800 ml-auto"
+                    >
+                        <PlusIcon className="w-4 h-4" />
+                        <span>Add Affiliate</span>
+                    </button>
+                </div>
+
 
                 <div className="space-y-4">
                     <h3>Bullet points</h3>

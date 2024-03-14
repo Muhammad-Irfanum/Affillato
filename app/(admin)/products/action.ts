@@ -39,6 +39,7 @@ export const getCloudSignature = async () => {
 export const createProduct = async (info: NewProduct) => {
   try {
     await startDb();
+    console.log('info:', info);
 
     await ProductModel.create({
       ...info,

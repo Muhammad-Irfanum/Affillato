@@ -52,20 +52,7 @@ const AdminSidebar = ({ children }: Props) => {
                         </Link>
                         <hr className="w-full " />
                     </li>
-                    <li>
-                        <Link className="flex items-center space-x-1" href="/sales">
-                            <CurrencyDollarIcon className="w-4 h-4" />
-                            <span>Sales</span>
-                        </Link>
-                        <hr className="w-full " />
-                    </li>
-                    <li>
-                        <Link className="flex items-center space-x-1" href="/orders">
-                            <ShoppingBagIcon className="h-4 w-4" />
-                            <span>Orders</span>
-                        </Link>
-                        <hr className="w-full " />
-                    </li>
+
                 </ul>
 
                 <div>

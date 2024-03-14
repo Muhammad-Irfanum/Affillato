@@ -10,12 +10,19 @@ import { HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import Wishlist from "../ui/Wishlist";
 
+import YouTubeModal from "./YouTubeModal";
+
 
 interface Props {
     wishlist?: boolean;
+    youtubeLink?: string; // Add this line
 }
 
-export default function BuyingOptions({ wishlist }: Props) {
+export default function BuyingOptions({ wishlist, youtubeLink }: Props) {
+    const [showYouTubeModal, setShowYouTubeModal] = useState(false);
+
+    const openYouTubeModal = () => setShowYouTubeModal(true);
+    const closeYouTubeModal = () => setShowYouTubeModal(false);
     const [quantity, setQuantity] = useState(1);
     const [isPending, startTransition] = useTransition();
     const { loggedIn } = useAuth()
@@ -84,6 +91,20 @@ export default function BuyingOptions({ wishlist }: Props) {
             >
                 Buy Now
             </Button>
+            <Button
+                className="rounded-full px-12 text-lg bg-red-500 capitalize"
+                onClick={openYouTubeModal}
+            >
+                YouTube
+            </Button>
+            {youtubeLink && (
+                <YouTubeModal
+                    isOpen={showYouTubeModal}
+                    onClose={closeYouTubeModal}
+                    youtubeLink={youtubeLink}
+                />
+            )}
+
             <Button variant="text"
                 disabled={isPending}
                 onClick={() => {

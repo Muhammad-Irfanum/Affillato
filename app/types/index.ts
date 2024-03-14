@@ -51,8 +51,14 @@ export interface NewProductInfo {
   quantity: number;
   thumbnail?: File;
   images?: File[];
+  affiliates: AffiliateEntry[];
 }
 
+export interface AffiliateEntry {
+  site: string;
+  link: string;
+  price: number;
+}
 export interface ProdcutResponse {
   id: string;
   title: string;
