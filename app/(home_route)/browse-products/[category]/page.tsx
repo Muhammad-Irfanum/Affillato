@@ -21,13 +21,16 @@ interface LatestProduct {
     category: string;
     quantity: number;
     sale: number;
+    affiliates: {
+        site: string;
+        link: string;
+        price: number;
+    }[];
 }[]
 
 const fetchProductsByCategory = async (category: string) => {
-    await startDb()
-    const products = await ProductModel.find({
-        category
-    }).sort('-createdAt')
+    await startDb();
+    const products = await ProductModel.find({ category }).sort("-createdAt");
     const productList = products.map((product) => {
         return {
             id: product._id.toString(),
@@ -37,13 +40,13 @@ const fetchProductsByCategory = async (category: string) => {
             price: product.price,
             category: product.category,
             quantity: product.quantity,
-            sale: product.sale
-        }
-    })
+            sale: product.sale,
+            affiliates: product.affiliates, // Include affiliates field
+        };
+    });
 
-
-    return JSON.stringify(productList)
-}
+    return JSON.stringify(productList);
+};
 
 
 interface Props {

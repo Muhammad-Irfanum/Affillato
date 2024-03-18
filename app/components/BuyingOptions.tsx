@@ -44,6 +44,8 @@ export default function BuyingOptions({ wishlist, youtubeLink,
     const router = useRouter()
     const productId = product[1]
 
+    console.log("buyLink", buyLink)
+
 
     const handleIncrement = () => {
         setQuantity((prevCount) => prevCount + 1);
@@ -100,9 +102,8 @@ export default function BuyingOptions({ wishlist, youtubeLink,
             <Button className="rounded-full px-12 text-lg bg-[#d0b48d]"
                 onClick={() => {
                     // Redirect to google.com
-                    window.location.href = {
-                        buyLink
-                    };
+                    // Open the affiliate link in a new tab
+                    window.open(buyLink, "_blank");
                 }}
             >
                 Buy Now

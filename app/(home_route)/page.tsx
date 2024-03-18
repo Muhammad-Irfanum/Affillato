@@ -18,6 +18,12 @@ interface LatestProduct {
     discounted: number;
   };
   sale: number;
+  affiliates: {
+    site: string;
+    link: string;
+    price: number;
+  }[];
+
 }
 
 const fetchLatestProducts = async () => {
@@ -34,11 +40,13 @@ const fetchLatestProducts = async () => {
       price: product.price,
       sale: product.sale,
       rating: product.rating,
+      affiliates: product.affiliates, // Include affiliates field
     };
   });
 
   return JSON.stringify(productList);
 };
+
 
 const fetchFeaturedProducts = async () => {
   await startDb();

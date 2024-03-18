@@ -1,4 +1,5 @@
-"use client";
+'use client'
+import React, { useContext, useState } from "react";
 import {
     Card,
     CardHeader,
@@ -8,7 +9,6 @@ import {
     CardFooter,
     Chip,
 } from "@material-tailwind/react";
-import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import truncate from "truncate";
@@ -18,8 +18,6 @@ import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import Rating from "./Rating";
-import router from 'next/navigation'
-import { useState } from "react";
 import ProductComparisonModal from "./ProductComparisonModal";
 import ComparisonContext from "./context/ComparisonContext";
 
@@ -35,10 +33,12 @@ export interface Product {
         base: number;
         discounted: number;
     };
+    affiliates: { site: string; link: string; price: number }[];
 };
 
 interface Props {
     product: Product;
+
 }
 
 export default function ProductCard({ product }: Props) {
@@ -49,44 +49,15 @@ export default function ProductCard({ product }: Props) {
         addProduct(product);
         setIsModalOpen(true);
     };
-    const { loggedIn } = useAuth()
+
+    const { loggedIn } = useAuth();
     const [isPending, startTransition] = useTransition();
-    const router = useRouter()
-    const addToCart = async () => {
+    const router = useRouter();
 
-        if (!loggedIn) return router.push('/auth/signin')
-        const res = await fetch("/api/product/cart", {
-            method: "POST",
-            body: JSON.stringify({ productId: product.id, quantity: 1 }),
-        });
-
-        const { error } = await res.json();
-
-        if (!res.ok && error) toast.error(error);
-        if (res.ok) toast.success("Product added to cart");
-
-        router.refresh();
-
-
+    const handleCheckout = () => {
+        const affiliateLink = product.affiliates[0]?.link || "https://google.com";
+        window.location.href = affiliateLink;
     };
-
-    const handleCheckout = async () => {
-
-
-        const res = await fetch('/api/checkout/instant', {
-            method: "POST",
-            body: JSON.stringify({
-                productId: product.id,
-            }),
-        });
-
-        const { url, error } = await res.json();
-        if (!res.ok && error) {
-            toast.error(error);
-        } else {
-            window.location.href = url;
-        }
-    }
 
     return (
         <Card className="w-full">
@@ -98,7 +69,10 @@ export default function ProductCard({ product }: Props) {
                 >
                     <Image
                         className="object-contain"
-                        src={product.thumbnail} alt={product.title} fill />
+                        src={product.thumbnail}
+                        alt={product.title}
+                        fill
+                    />
                     <div className="absolute right-0 p-2 ">
                         <Chip color="red" value={`${product.sale}% off`} />
                     </div>
@@ -109,15 +83,16 @@ export default function ProductCard({ product }: Props) {
                             {truncate(product.title, 50)}
                         </h3>
                         <div className="flex justify-end">
-                            {
-                                product.rating && <Rating value={parseFloat(product.rating.toFixed(1))
-
-                                } />
-                            }
+                            {product.rating && (
+                                <Rating value={parseFloat(product.rating.toFixed(1))} />
+                            )}
                         </div>
                     </div>
                     <div className="flex justify-end items-center space-x-2 mb-2">
-                        <Typography color="blue-gray" className="font-medium line-through">
+                        <Typography
+                            color="blue-gray"
+                            className="font-medium line-through"
+                        >
                             {formatPrice(product.price.base)}
                         </Typography>
                         <Typography color="blue-gray" className="font-medium">
@@ -132,11 +107,7 @@ export default function ProductCard({ product }: Props) {
             <CardFooter className="pt-0 space-y-4">
                 <Button
                     disabled={isPending}
-
-                    onClick={() => {
-                        // 
-                        handleCompareClick()
-                    }}
+                    onClick={handleCompareClick}
                     ripple={false}
                     fullWidth={true}
                     className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:shadow-none hover:scale-105 focus:shadow-none focus:scale-105 active:scale-100"
@@ -144,12 +115,7 @@ export default function ProductCard({ product }: Props) {
                     Compare
                 </Button>
                 <Button
-                    onClick={() => {
-                        startTransition(async () => {
-                            // Redirect to google.com
-                            window.location.href = 'https://google.com';
-                        });
-                    }}
+                    onClick={handleCheckout}
                     ripple={false}
                     fullWidth={true}
                     className=" bg-[#d0b48d] text-white shadow-none hover:shadow-none hover:scale-105 focus:shadow-none focus:scale-105 active:scale-100"
