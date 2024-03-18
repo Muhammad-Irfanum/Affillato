@@ -46,6 +46,7 @@ export interface NewProductInfo {
   description: string;
   bulletPoints: string[];
   mrp: number;
+  youtubeLink?: string;
   salePrice: number;
   category: string;
   quantity: number;

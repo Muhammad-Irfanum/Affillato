@@ -48,6 +48,7 @@ export default function ProductImageGallery(props: Props) {
                 }}
                 ref={slider}
 
+
             >
                 {images.map((img, index) => {
                     return (

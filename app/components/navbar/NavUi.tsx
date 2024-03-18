@@ -76,7 +76,7 @@ export default function NavUI({ cartItemsCount, avatar }: Props) {
                             <Spinner />
                         ) : (
                             <>
-                                <Link className="px-4 py-1" href="/auth/signin">
+                                <Link className="px-4 py-1 text-white" href="/auth/signin">
                                     Sign in
                                 </Link>
                                 <Link
@@ -90,7 +90,6 @@ export default function NavUI({ cartItemsCount, avatar }: Props) {
                     </div>
 
                     <div className="lg:hidden flex items-center space-x-2">
-                        <CartIcon cartItems={cartItemsCount} />
 
                         <IconButton
                             variant="text"

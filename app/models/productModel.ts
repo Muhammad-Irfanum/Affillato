@@ -16,6 +16,7 @@ export interface NewProduct {
   category: string;
   quantity: number;
   rating?: number;
+  youtubeLink?: string;
 }
 
 // Step 1: Define the interface for the document
@@ -30,6 +31,7 @@ const productSchema = new Schema<ProductDocument>(
     title: { type: String, required: true },
     description: { type: String, required: true },
     bulletPoints: { type: [String] },
+    youtubeLink: { type: String },
     affiliates: {
       type: [
         {

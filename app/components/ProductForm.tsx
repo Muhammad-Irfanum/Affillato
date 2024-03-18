@@ -35,6 +35,7 @@ export interface InitialValue {
     category: string;
     quantity: number;
     affiliates: AffiliateEntry[];
+    youtubeLink?: string;
 }
 
 const defaultValue = {
@@ -45,6 +46,7 @@ const defaultValue = {
     salePrice: 0,
     category: "",
     quantity: 0,
+    youtubeLink: "",
 
 };
 
@@ -177,7 +179,7 @@ export default function ProductForm(props: Props) {
                     startTransition(async () => {
                         await onSubmit({
                             ...productInfo, images: imageFiles, thumbnail: thumbnail!,
-                            affiliates: affiliates!
+                            affiliates: affiliates!, youtubeLink: productInfo.youtubeLink,
                         });
                     })
                 }
@@ -231,6 +233,14 @@ export default function ProductForm(props: Props) {
                         </Option>
                     ))}
                 </Select>
+                <Input
+                    label="YouTube Link"
+                    value={productInfo.youtubeLink}
+                    onChange={({ target }) =>
+                        setProductInfo({ ...productInfo, youtubeLink: target.value })
+                    }
+                />
+
 
                 <div className="flex space-x-4">
                     <div className="space-y-4 flex-1">

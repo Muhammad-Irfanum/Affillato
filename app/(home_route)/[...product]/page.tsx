@@ -55,7 +55,8 @@ const fetchProduct = async (productId: string) => {
         sale: product.sale,
         outOfStock: product.quantity < 1,
         isWishlist,
-        affiliates: product.affiliates
+        affiliates: product.affiliates,
+        youtubeLink: product.youtubeLink,
     });
 };
 
@@ -91,6 +92,7 @@ const fetchProductReviews = async (productId: string) => {
 const fetchSimilarProducts = async () => {
     await startDb();
 
+
     const products = await ProductModel.find().sort({ rating: -1 }).limit(5);
 
     return products.map(({ _id, thumbnail, title, price }) => {
@@ -117,6 +119,7 @@ const Product = async ({ params }: Props) => {
     const reviews = JSON.parse(await fetchProductReviews(productId));
 
     const similarProducts = await fetchSimilarProducts();
+    console.log(productInfo, "productInfo")
     return (
         <div className='p-4'>
             <ProductView
@@ -130,6 +133,7 @@ const Product = async ({ params }: Props) => {
                 outOfStock={productInfo.outOfStock}
                 isWishlist={productInfo.isWishlist}
                 affiliates={productInfo.affiliates}
+                youtubeLink={productInfo.youtubeLink}
             />
 
             <SimilarProductsList products={similarProducts} />

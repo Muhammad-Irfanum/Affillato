@@ -15,10 +15,22 @@ import YouTubeModal from "./YouTubeModal";
 
 interface Props {
     wishlist?: boolean;
-    youtubeLink?: string; // Add this line
+    youtubeLink?: string;
+    title?: string;
+    description?: string;
+    rating?: number;
+    bulletPoints?: string[];
+    price?: number;
+
 }
 
-export default function BuyingOptions({ wishlist, youtubeLink }: Props) {
+export default function BuyingOptions({ wishlist, youtubeLink,
+    title,
+    description,
+    price,
+    bulletPoints,
+    rating,
+}: Props) {
     const [showYouTubeModal, setShowYouTubeModal] = useState(false);
 
     const openYouTubeModal = () => setShowYouTubeModal(true);
@@ -102,8 +114,14 @@ export default function BuyingOptions({ wishlist, youtubeLink }: Props) {
                     isOpen={showYouTubeModal}
                     onClose={closeYouTubeModal}
                     youtubeLink={youtubeLink}
+                    title={title}
+                    description={description}
+                    rating={rating}
+                    price={price}
+                    bulletPoints={bulletPoints}
                 />
             )}
+
 
             <Button variant="text"
                 disabled={isPending}

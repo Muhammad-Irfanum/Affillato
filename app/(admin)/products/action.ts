@@ -100,3 +100,14 @@ export const updateProduct = async (
     throw error;
   }
 };
+
+export const deleteProduct = async (id: string) => {
+  try {
+    await startDb();
+    await ProductModel.findByIdAndDelete(id);
+    return 'success';
+  } catch (error) {
+    console.error('Error deleting product:', error as any);
+    throw error;
+  }
+};

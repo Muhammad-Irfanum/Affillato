@@ -31,13 +31,14 @@ export default function ProductView({
     rating,
     outOfStock,
     isWishlist,
-    affiliates
+    affiliates,
+    youtubeLink,
 }: Props) {
 
-    console.log(isWishlist)
+    console.log(youtubeLink, "youtubeLink")
     return (
         <div className="flex lg:flex-row flex-col md:gap-4 gap-2">
-            <div className="flex-1 lg:self-start self-center">
+            <div className="flex-1 lg:self-start self-center ">
                 {/* Product Image Slider */}
                 <ProductImageGallery images={images} />
             </div>
@@ -70,8 +71,16 @@ export default function ProductView({
                 <div className="flex py-4">
                     {
                         outOfStock ? <p className="text-red-500 uppercase">Out of Stock</p> : <BuyingOptions
-                            wishlist={isWishlist} youtubeLink='https://www.youtube.com/watch?v=AgyJv2Qelwk'
+                            wishlist={isWishlist}
+                            youtubeLink={youtubeLink}
+                            title={title}
+                            description={description}
+                            rating={rating}
+                            price={price.discounted}
+                            bulletPoints={points}
+
                         />
+
                     }
                 </div>
                 <div className="mt-4">

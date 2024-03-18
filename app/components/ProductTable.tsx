@@ -1,6 +1,6 @@
 "use client";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import {
     Typography,
     CardBody,
@@ -13,6 +13,9 @@ import truncate from "truncate";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SearchForm from "@components/SearchForm";
+import { deleteProduct } from "../(admin)/products/action";
+import { toast } from "react-toastify";
+
 
 export interface Product {
     id: string;
@@ -174,11 +177,23 @@ export default function ProductTable(props: Props) {
                                         </div>
                                     </td>
                                     <td className={classes}>
-                                        <Link href={`/products/update/${id}`}>
-                                            <IconButton variant="text" color="blue-gray">
-                                                <PencilIcon className="h-4 w-4" />
-                                            </IconButton>
-                                        </Link>
+                                        <div
+                                            className="flex items-center "
+                                        >
+
+                                            <div
+                                                className="cursor-pointer"
+                                                onClick={async () => {
+                                                    await deleteProduct(id);
+
+                                                    toast.success("Product deleted successfully");
+                                                    router.refresh()
+
+                                                }}
+                                            >
+                                                <TrashIcon className="h-4 w-4" />
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             );
@@ -186,26 +201,28 @@ export default function ProductTable(props: Props) {
                     </tbody>
                 </table>
             </CardBody>
-            {showPageNavigator ? (
-                <CardFooter className="flex items-center justify-center border-t border-blue-gray-50 p-4">
-                    <div className="flex items-center gap-2">
-                        <Button
-                            disabled={currentPageNo === 1}
-                            onClick={handleOnPrevPress}
-                            variant="text"
-                        >
-                            Previous
-                        </Button>
-                        <Button
-                            disabled={!hasMore}
-                            onClick={handleOnNextPress}
-                            variant="text"
-                        >
-                            Next
-                        </Button>
-                    </div>
-                </CardFooter>
-            ) : null}
-        </div>
+            {
+                showPageNavigator ? (
+                    <CardFooter className="flex items-center justify-center border-t border-blue-gray-50 p-4">
+                        <div className="flex items-center gap-2">
+                            <Button
+                                disabled={currentPageNo === 1}
+                                onClick={handleOnPrevPress}
+                                variant="text"
+                            >
+                                Previous
+                            </Button>
+                            <Button
+                                disabled={!hasMore}
+                                onClick={handleOnNextPress}
+                                variant="text"
+                            >
+                                Next
+                            </Button>
+                        </div>
+                    </CardFooter>
+                ) : null
+            }
+        </div >
     );
 }
