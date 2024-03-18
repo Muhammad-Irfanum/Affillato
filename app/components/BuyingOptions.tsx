@@ -102,8 +102,8 @@ export default function BuyingOptions({ wishlist, youtubeLink,
             <Button className="rounded-full px-12 text-lg bg-[#d0b48d]"
                 onClick={() => {
                     // Redirect to google.com
-                    // Open the affiliate link in a new tab
-                    window.open(buyLink, "_blank");
+                    // Open the affiliate link in a new tab if no buy link is provided go to google.com
+                    window.open(buyLink || "https://google.com", "_blank")
                 }}
             >
                 Buy Now
