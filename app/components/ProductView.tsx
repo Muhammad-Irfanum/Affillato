@@ -78,6 +78,7 @@ export default function ProductView({
                             rating={rating}
                             price={price.discounted}
                             bulletPoints={points}
+                            buyLink={affiliates[0].link}
 
                         />
 

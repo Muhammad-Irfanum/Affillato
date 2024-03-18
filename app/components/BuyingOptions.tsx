@@ -21,6 +21,7 @@ interface Props {
     rating?: number;
     bulletPoints?: string[];
     price?: number;
+    buyLink?: string;
 
 }
 
@@ -30,6 +31,7 @@ export default function BuyingOptions({ wishlist, youtubeLink,
     price,
     bulletPoints,
     rating,
+    buyLink
 }: Props) {
     const [showYouTubeModal, setShowYouTubeModal] = useState(false);
 
@@ -98,7 +100,9 @@ export default function BuyingOptions({ wishlist, youtubeLink,
             <Button className="rounded-full px-12 text-lg bg-[#d0b48d]"
                 onClick={() => {
                     // Redirect to google.com
-                    window.location.href = "https://www.google.com";
+                    window.location.href = {
+                        buyLink
+                    };
                 }}
             >
                 Buy Now
